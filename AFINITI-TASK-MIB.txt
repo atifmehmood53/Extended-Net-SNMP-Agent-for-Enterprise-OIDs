@@ -1,0 +1,79 @@
+AFINITI-TASK-MIB DEFINITIONS ::= BEGIN
+
+--
+-- OUR CUSTOM MIB FOR AFINITI TEST TASKS 
+--
+
+IMPORTS
+    OBJECT-TYPE, Integer32,
+    enterprises                   FROM SNMPv2-SMI
+;
+
+afiniti MODULE-IDENTITY
+    LAST-UPDATED "202005130000Z"
+    ORGANIZATION "Afiniti, Inc"
+    CONTACT-INFO    
+          "email:    atifmehmood2464@gmail.com"
+    DESCRIPTION
+        "This Module Has Custom Enterprice Objects Of Afiniti"
+    ::= { enterprises 53864 }
+
+
+-- sub agent extended objects
+
+staticProgrammeVersion OBJECT-TYPE
+    SYNTAX      OCTET STRING
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION
+	"Version of software that runs on the system."
+    ::= { afiniti 1 }
+
+
+requiredDiskSpaceUsage OBJECT-TYPE
+    SYNTAX      Integer32
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION
+	"Disk Space used by /var/log dirctory"
+    ::= { afiniti 2 }
+
+
+snmpSignal OBJECT-TYPE
+    SYNTAX      OCTET STRING
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION
+	"Latest value of snmpSignal"
+    ::= { afiniti 3 }
+
+
+-- pass through extended objects
+
+staticProgrammeVersionPass OBJECT-TYPE
+    SYNTAX      OCTET STRING
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION
+	"Version of software that runs on the system."
+    ::= { afiniti 10 }
+
+
+requiredDiskSpaceUsagePass OBJECT-TYPE
+    SYNTAX      Integer32
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION
+	"Disk Space used by /var/log dirctory"
+    ::= { afiniti 11 }
+
+
+snmpSignalPass OBJECT-TYPE
+    SYNTAX      OCTET STRING
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION
+	"Latest value of snmpSignal"
+    ::= { afiniti 12 }
+    
+END
