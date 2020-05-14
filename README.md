@@ -1,9 +1,9 @@
 # Extended Net-SNMP Agent For Enterprise OIDs
 This project was completed as a Job Hiring Task for **Afiniti Inc.**
 ## Task discription 
-In this task we had to setup an set up an SNMP agent along with custom enterprise OIDs on a Linux server to be monitored.
+In this task we had to setup an SNMP agent along with custom enterprise OIDs on a Linux server to be monitored.
 ## Research Findings
-Since I never worked with the SNMP protocol before I had to do some research on my own. I am not including the details of the protocol itself because it will make the readme lengthy. But we must discuss how Net-SNMP work because my solution extends it. Net-SNMP has a daemon called **snmpd** which is responsible to serve the requests for the objects it is exposing. These objects can theoretically anything but they are usually meaningful for the end manager. These objects are uniquely identified by their OIDs (**Object Identifiers**). These OIDs are registered in the agent itself but they are also defined in MIBs (**Management Information Base**). These are the files which define the structure of these objects and their OIDs. These files are also useful for manager because through these files it will be able to understand that which resources are available from a particulate agent. These MIBs can also be used to translate OIDs into more human readable form as well as generating the basic structure of the code to extend net-snmp using MIB modules and sub agent. The whole snmp agent is dependent on snmp.conf and snmpd.conf files and we can update these configurations to meet our needs. Now that we have some context of how net-snmp works we can extend it in many ways, here are some of them which I have explored in my solution: 
+Since I never worked with the SNMP protocol before I had to do some research on my own. I am not including the details of the protocol itself because it will make the readme lengthy. But we must discuss how Net-SNMP work because my solution extends it. Net-SNMP has a daemon called **snmpd** which is responsible to serve the requests for the objects it is exposing. These objects can theoretically anything but they are usually meaningful for the end manager. These objects are uniquely identified by their OIDs (**Object Identifiers**). These OIDs are registered in the agent itself but they are also defined in MIBs (**Management Information Base**). These are the files which define the structure of objects and their OIDs. These files are also useful for manager because it will be able to understand that which resources are available from a particulate agent. These MIBs can also be used to translate OIDs into more human readable form as well as generating the basic structure of the code to extend net-snmp using MIB modules and sub agent. The whole snmp agent is dependent on snmp.conf and snmpd.conf files and we can update these configurations to meet our needs. Now that we have some context of how net-snmp works we can extend it in many ways, here are some of them which I have explored in my solution: 
 1. Using `extend` command. In **snmpd.conf** file we can define these commands which are very powerfull to run any arbitrary programme and return the result as well as the return status code. It also has a variant `extend-sh` which can be used to run any shell command. These command doesn't require any special information of snmp itself and return output in a specific format.
 2. Using `pass` command. This is also defined **snmpd.conf** file. It is a more general mechanism for implementing arbitrary MIB objects. The specified command will be invoked for any request within the named MIB subtree, and passed details of the requested OID. It should return the information relevant to the requested OID.
 3. Using sub agent, we can create our own sub agents. The benefit of this are numerous, such as it can be either connected to the master agent as a sub agent or can be run independently. This sub agent includes MIB modules to respond to custom OIDs.  We can  generate MIB modules' structure code in C to implement this using the following command:
@@ -30,6 +30,10 @@ To run my solution on your machine, you should have the following requirements i
 - make 
 - gcc 
 - libpq-dev
+
+run the following command to install them 
+
+```sudo apt install snmpd snmp libsnmp-dev make gcc libpq-dev snmp-mibs-downloader```
 # Setup PostgreSQL, Required User, Database and Table
 you can follow the steps from PosgreSql's official guide to setup it. https://www.postgresql.org/download/linux/ubuntu/
 > **My solution assumes that you have a user with name=atif and password=atif**
@@ -96,7 +100,7 @@ I implemented my solution in C because it is fast and the code I have written fo
 	- **pass-programmes**  - these are the programs which will be used by OIDs registered through ``pass`` in ``snmpd.conf`` file. 
 	- **utils** - contains all utility code which is shared in the whole project 
 ## MIBs
-This project contains a MIB files named **AFINITI-TASK-MIB**.txt which defines SMIs for all custom OIDs used in this project. You can look into that in this folder. Bellow is the summary of what the objects and their OIDs it defines and which approach in my solution uses them.
+This project contains a MIB files named **AFINITI-TASK-MIB**.txt which defines SMIs for all custom OIDs used in this project. You can look into that in this folder. Below is the summary of what the objects and their OIDs it defines and which approach in my solution uses them.
 
 **Following are the OIDs are used by sub agent :** 
 |                 OID              |               Translated Version	|                  
