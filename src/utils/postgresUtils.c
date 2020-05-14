@@ -8,7 +8,7 @@ void cleanup(PGconn *conn) {
 }
 
 char * getQueryResult(int* hasError){
-    PGconn *conn = PQconnectdb("dbname =afinitiTest user =fita password =atif hostaddr = 127.0.0.1 port = 5432");
+    PGconn *conn = PQconnectdb("dbname =afinitiTest user =atif password =atif hostaddr = 127.0.0.1 port = 5432");
 
     if (PQstatus(conn) == CONNECTION_BAD) {
         fprintf(stderr, "Connection to database failed: %s\n", PQerrorMessage(conn));
