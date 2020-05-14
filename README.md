@@ -39,12 +39,12 @@ you can follow the steps from PosgreSql's official guide to setup it. https://ww
 > **My solution assumes that you have a user with name=atif and password=atif**
 1. ``sudo -u postgres createuser --interactive``
 	set role name to **atif**  
-2. ``sudo su postgres psql`` this will give psql shell access
+2. ``sudo -u postgres psql`` this will give psql shell access
 3. ``\password atif`` and change password to **atif**
-4. ``create database "afinitiTest"``
-5. ``\c "afinitiTest"``
-6. ``\i ./database.sql``
-7. ``select * from "snmpSignals"``
+4. ``create database "afinitiTest";``
+5. ``\c "afinitiTest";``
+6. ``\i ./database.sql;``
+7. ``select * from "snmpSignals";``
 # How to Run the Programme 
 In order to run the application you can run the following commands 
 1. ``sudo make`` **here sudo is required because it creates a directory in root folder**
@@ -62,7 +62,7 @@ This command will compile all the programmes and will produce the following prog
 2. ``sudo ./setup.sh``
 This will install all the required dependencies and copy the  required configuration files to the required folders. 
 3. Once the setup has been completed now you can access custom OIDs. 
-4. now run ``snmpwalk -v2c -c test localhost .1.3.6.1.4.1.53834`` you will see that you have following OIDs available these are from ``extend-sh`` and ``pass`` 
+4. now run ``snmpwalk -v2c -c test localhost .1.3.6.1.4.1.53864`` you will see that you have following OIDs available these are from ``extend-sh`` and ``pass`` 
 
 
 	|           OID     |                               Translated Version                                      |                  
@@ -84,7 +84,7 @@ this will connect sub agent to the master agent and you will have following OIDs
 	|.1.3.6.1.4.1.53864.1.0|AFINITI-TASK-MIB::staticProgrammeVersion.0  |        
 	|.1.3.6.1.4.1.53864.2.0|AFINITI-TASK-MIB::requiredDiskSpaceUsage.0 |          
 	|.1.3.6.1.4.1.53864.3.0|AFINITI-TASK-MIB::snmpSignal.0|
-6. run ``snmpwalk -v2c -c test localhost .1.3.6.1.4.1.53834`` again now you can see OIDs exposed by sub agent as well.
+6. run ``snmpwalk -v2c -c test localhost .1.3.6.1.4.1.53864`` again now you can see OIDs exposed by sub agent as well.
 
 	![Output of extend-sh and pass](/img/subagent-output.png)
 
@@ -96,7 +96,7 @@ I implemented my solution in C because it is fast and the code I have written fo
 - **src** - contains all c files
 	- **custom-agent** - contains code for sub agent
 	- **custom-objects** - contains MIB modules for custom objects  
-	- **helper-programmes** - these are the programs which are used by OIDs registered through ``extend-sh`` in ``snmpd.conf`` file.
+	- **extend-programmes** - these are the programs which are used by OIDs registered through ``extend-sh`` in ``snmpd.conf`` file.
 	- **pass-programmes**  - these are the programs which will be used by OIDs registered through ``pass`` in ``snmpd.conf`` file. 
 	- **utils** - contains all utility code which is shared in the whole project 
 ## MIBs
