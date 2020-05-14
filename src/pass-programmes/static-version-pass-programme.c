@@ -12,7 +12,7 @@ int main(int argc, char *argv[])
     const char baseOID[] = ".1.3.6.1.4.1.53864.10";
     const char scalarOID[] = ".1.3.6.1.4.1.53864.10.0";
     const char responseType[] = "string\n";
-    const char response[] = "1.6.1\n";
+    const char response[] = "6.1.1\n";
 
     // if snmpgetnext request
     if (strcmp(argv[1], "-n") == 0)
